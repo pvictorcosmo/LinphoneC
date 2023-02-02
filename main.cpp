@@ -41,9 +41,7 @@ int main(int argc, char *argv[]){
         /* take the destination sip uri from the command line arguments */
 //        dest="sip:+5585989592085@sip.linphone.org";
         signal(SIGINT,stop);
-#ifdef DEBUG_LOGS
-        linphone_core_enable_logs(NULL); /*enable liblinphone logs.*/
-#endif
+
         /*
          Fill the LinphoneCoreVTable with application callbacks.
          All are optional. Here we only use the call_state_changed callbacks
