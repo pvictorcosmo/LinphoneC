@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import LinphoneController 1.0
+
 Window {
     width: 640
     height: 480
@@ -19,6 +21,35 @@ Window {
             anchors.fill:parent
 
         }
-        onClicked: value++
+        onClicked: LinphoneController.initThread()
+    }
+
+
+    Dialog {
+        id: call
+        width: 320
+        height: 240
+
+        contentItem: Rectangle {
+            color: "lightskyblue"
+            anchors.fill: parent
+            Text {
+                text: "Ligação"
+                color: "navy"
+                anchors.centerIn: parent
+            }
+        }
+    }
+
+    Connections {
+        target: LinphoneController
+
+        function onOpenCall() {
+            call.open()
+        }
+
+        function onOperate() {
+            console.log("Iniciou a Thread")
+        }
     }
 }
