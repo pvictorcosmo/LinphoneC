@@ -40,6 +40,54 @@ static void call_state_changed(LinphoneCore *lc, LinphoneCall *call, LinphoneCal
                     printf("Unhandled notification %i\n",cstate);
     }
 }
+int LinphoneController::linphoneCalling(){
+
+    LinphoneCoreVTable vtable={0};
+    LinphoneCall *call=NULL;
+    const char *dest=NULL;
+    /* take the destination sip uri from the command line arguments */
+    vtable.call_state_changed=call_state_changed;
+    dest="sip:LAPADA@192.168.200.73";
+       if (dest){
+                /*
+                 Place an outgoing call
+                */
+                call=linphone_core_invite(lc,dest);
+                if (call==NULL){
+                        printf("Could not place call to %s\n",dest);
+
+                }else printf("Call to %s is in progress...",dest);
+                linphone_call_ref(call);
+        }
+    /* main loop for receiving notifications and doing background linphonecore work: */
+    while(running){
+            linphone_core_iterate(lc);
+            ms_usleep(50000);
+//            if(LinphoneCallStateIncomingReceived){
+//                 linphone_core_accept_call(lc,call);
+
+//            }
+    }
+        if (call && linphone_call_get_state(call)!=LinphoneCallEnd){
+                /* terminate the call */
+                printf("Terminating the call...\n");
+                linphone_core_terminate_call(lc,call);
+                /*at this stage we don't need the call object */
+                linphone_call_unref(call);
+        }
+
+
+
+    printf("Shutting down...\n");
+
+    printf("Exited\n");
+
+
+    emit callingOk();
+    return 0;
+
+}
+
 
 void LinphoneWorker::doWork()
 {
@@ -98,6 +146,7 @@ void LinphoneController::decline(){
     LinphoneReason Reason;
     LinphoneCall *call=NULL;
     linphone_core_decline_call(lc,call,Reason);
+
     emit declineCall();
 }
 

@@ -13,7 +13,7 @@ Window {
         property int value: 0
         width: parent.width/2
         height: parent.height/2
-        anchors.centerIn: parent
+        //anchors.centerIn: parent
 
         text: "value" + value
         background: Rectangle{
@@ -22,6 +22,21 @@ Window {
 
         }
         onClicked: LinphoneController.initThread()
+
+    }
+    Button {
+        id: b_call
+        width: 70
+        height: 70
+        anchors.centerIn:parent
+            background: Rectangle{
+                radius: 100
+                color: "red"
+                anchors.fill:parent
+            }
+            onClicked: LinphoneController.linphoneCalling();
+
+
     }
 
 
@@ -57,7 +72,7 @@ Window {
                 width: 70
                 height: 70
                 anchors.left: b_accept.right
-                anchors.leftMargin: 40
+                anchors.leftMargin: 100
                 background: Rectangle{
                     radius: 100
                     color: "red"
@@ -82,10 +97,12 @@ Window {
 
         function onAcceptCall(){
             console.log("Call aceita");
-
         }
         function onDeclineCall(){
             console.log("Call declined")
+        }
+        function onCallingOk(){
+            console.log("Call iniciada")
         }
     }
 }

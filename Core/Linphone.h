@@ -37,6 +37,7 @@ public:
     Q_INVOKABLE void accept();
 
     Q_INVOKABLE void decline();
+    Q_INVOKABLE int linphoneCalling();
 
 public slots:
     void onCallReceived(const bool result);
@@ -52,6 +53,7 @@ signals:
     void openCall();
     void acceptCall();
     void declineCall();
+    void callingOk();
 };
 
 #endif // LINPHONE_H
