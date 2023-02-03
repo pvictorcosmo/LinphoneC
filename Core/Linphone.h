@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QQmlEngine>
 #include <QJSEngine>
+#include <linphone/core.h>
 
 class LinphoneWorker : public QObject
 {
@@ -33,6 +34,10 @@ public:
     Q_INVOKABLE void initThread() {
         emit operate();
     }
+    Q_INVOKABLE void accept();
+
+    Q_INVOKABLE void decline();
+
 public slots:
     void onCallReceived(const bool result);
 private:
@@ -45,6 +50,8 @@ private:
 signals:
     void operate();
     void openCall();
+    void acceptCall();
+    void declineCall();
 };
 
 #endif // LINPHONE_H

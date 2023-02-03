@@ -1,9 +1,11 @@
 #include "Linphone.h"
 #include <iostream>
 #include <QDebug>
-#include<linphone/core.h>
-#include<signal.h>
+#include <linphone/core.h>
+#include <signal.h>
 #include <QThread>
+
+LinphoneCore *lc;
 
 static bool_t running=TRUE;
 static void stop(int signum){
@@ -42,8 +44,6 @@ static void call_state_changed(LinphoneCore *lc, LinphoneCall *call, LinphoneCal
 void LinphoneWorker::doWork()
 {
     LinphoneCoreVTable vtable={0};
-    LinphoneCore *lc;
-    LinphoneCall *call=NULL;
 
     signal(SIGINT,stop);
         vtable.call_state_changed=call_state_changed;
@@ -54,16 +54,18 @@ void LinphoneWorker::doWork()
             linphone_core_iterate(lc);
             ms_usleep(50000);
             if(linphone_core_in_call(lc)){
-                //qDebug() << "Entrou";
+                //qDebug() << "Entrou
                 emit callReceived(true);
-                linphone_core_accept_call(lc,call);
+//                linphone_core_accept_call(lc,call);
             }
             else
                 emit callReceived(false);
         }
+
         //qDebug() << "Outra thread";
     emit callReceived(false);
-};
+
+}
 
 
 LinphoneController::LinphoneController() {
@@ -85,6 +87,20 @@ void LinphoneController::onCallReceived(const bool result)
     if(result)
         emit openCall();
 }
+
+void LinphoneController::accept(){
+    LinphoneCall *call=NULL;
+    linphone_core_accept_call(lc,call);
+    emit acceptCall();
+}
+
+void LinphoneController::decline(){
+    LinphoneReason Reason;
+    LinphoneCall *call=NULL;
+    linphone_core_decline_call(lc,call,Reason);
+    emit declineCall();
+}
+
 
 
 

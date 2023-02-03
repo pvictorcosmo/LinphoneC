@@ -17,7 +17,7 @@ Window {
 
         text: "value" + value
         background: Rectangle{
-            color: "red"
+            color: "lightskyblue"
             anchors.fill:parent
 
         }
@@ -33,10 +33,38 @@ Window {
         contentItem: Rectangle {
             color: "lightskyblue"
             anchors.fill: parent
+
             Text {
-                text: "Ligação"
+                text: "Deseja atender essa ligação?"
                 color: "navy"
                 anchors.centerIn: parent
+            }
+            Button{
+                id: b_accept
+                width: 70
+                height: 70
+
+                background: Rectangle{
+                    radius: 100
+                    color: "lightgreen"
+                    anchors.fill:parent
+
+                }
+                onClicked: LinphoneController.accept()
+            }
+            Button{
+                id: b_decline
+                width: 70
+                height: 70
+                anchors.left: b_accept.right
+                anchors.leftMargin: 40
+                background: Rectangle{
+                    radius: 100
+                    color: "red"
+                    anchors.fill:parent
+                }
+
+                onClicked: LinphoneController.decline()
             }
         }
     }
@@ -50,6 +78,14 @@ Window {
 
         function onOperate() {
             console.log("Iniciou a Thread")
+        }
+
+        function onAcceptCall(){
+            console.log("Call aceita");
+
+        }
+        function onDeclineCall(){
+            console.log("Call declined")
         }
     }
 }
