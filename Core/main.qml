@@ -11,11 +11,10 @@ Window {
 
     Button {
         property int value: 0
-        width: parent.width/2
-        height: parent.height/2
+        width: parent.width
+        height: parent.height
         //anchors.centerIn: parent
 
-        text: "value" + value
         background: Rectangle{
             color: "lightskyblue"
             anchors.fill:parent

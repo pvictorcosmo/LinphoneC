@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterSingletonType<LinphoneController>("LinphoneController", 1, 0, "LinphoneController", &LinphoneController::qmlInstance);
+    LinphoneController::getInstance();
+
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
