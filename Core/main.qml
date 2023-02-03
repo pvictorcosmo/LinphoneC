@@ -26,8 +26,9 @@ Window {
     }
     Button {
         id: b_call
-        width: 70
+        width: 200
         height: 70
+        text: "Clique para ligar"
         anchors.centerIn:parent
             background: Rectangle{
                 radius: 100
