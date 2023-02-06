@@ -13,6 +13,11 @@ Window {
         property int value: 0
         width: parent.width
         height: parent.height
+
+//        TextInput {
+//            text: "Text"
+//            cursorVisible: true
+//        }
         //anchors.centerIn: parent
 
         background: Rectangle{
@@ -34,7 +39,8 @@ Window {
                 color: "red"
                 anchors.fill:parent
             }
-            onClicked: LinphoneController.linphoneCalling();
+            onClicked: {LinphoneController.linphoneCalling();LinphoneController.callInitialization();}
+
 
 
     }
@@ -83,6 +89,22 @@ Window {
             }
         }
     }
+//    Dialog {
+//        id: call_init
+//        width: parent
+//        height: parent
+
+//        contentItem: Rectangle {
+//            color: "lightskyblue"
+//            anchors.fill: parent
+
+//            Text {
+//                text: "Ligação em andamento"
+//                color: "navy"
+//                anchors.centerIn: parent
+//            }
+//        }
+//    }
 
     Connections {
         target: LinphoneController
@@ -103,6 +125,9 @@ Window {
         }
         function onCallingOk(){
             console.log("Call iniciada")
+        }
+        function onCallInit(){
+            call_init.open()
         }
     }
 }

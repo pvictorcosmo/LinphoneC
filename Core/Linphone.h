@@ -38,6 +38,9 @@ public:
 
     Q_INVOKABLE void decline();
     Q_INVOKABLE int linphoneCalling();
+    Q_INVOKABLE void callInitialization(){
+        emit callInit();
+    };
 
 public slots:
     void onCallReceived(const bool result);
@@ -54,6 +57,17 @@ signals:
     void acceptCall();
     void declineCall();
     void callingOk();
+    void callInit();
 };
+
+class Linphone : public QObject{
+ public:
+
+
+
+};
+
+
+
 
 #endif // LINPHONE_H

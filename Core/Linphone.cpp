@@ -47,7 +47,7 @@ int LinphoneController::linphoneCalling(){
     const char *dest=NULL;
     /* take the destination sip uri from the command line arguments */
     vtable.call_state_changed=call_state_changed;
-    dest="sip:LAPADA@192.168.200.73";
+    dest="sip:Leo@192.168.200.121";
        if (dest){
                 /*
                  Place an outgoing call
