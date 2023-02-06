@@ -38,9 +38,11 @@ public:
 
     Q_INVOKABLE void decline();
     Q_INVOKABLE int linphoneCalling();
-    Q_INVOKABLE void callInitialization(){
+    Q_INVOKABLE void callInitialization()
+    {
         emit callInit();
-    };
+    }
+    void CreateAccount();
 
 public slots:
     void onCallReceived(const bool result);
@@ -64,6 +66,11 @@ class Linphone : public QObject{
  public:
 
 
+};
+
+class Video : public QObject{
+public:
+    bool checkCameras();
 
 };
 

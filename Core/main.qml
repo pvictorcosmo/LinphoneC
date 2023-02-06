@@ -2,12 +2,44 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import LinphoneController 1.0
-
+ import QtMultimedia 5.15
 Window {
     width: 640
     height: 480
     visible: true
     title: qsTr("Hello World")
+
+        Camera {
+            id: camera
+
+            imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
+
+            exposure {
+                exposureCompensation: -1.0
+                exposureMode: Camera.ExposurePortrait
+            }
+
+            flash.mode: Camera.FlashRedEyeReduction
+
+            imageCapture {
+                onImageCaptured: {
+                    photoPreview.source = preview  // Show the preview in an Image
+                }
+            }
+        }
+
+        VideoOutput {
+            source: camera
+            anchors.fill: parent
+            focus : visible // to receive focus and capture key events when visible
+        }
+
+        Image {
+            id: photoPreview
+        }
+
+
+
 
     Button {
         property int value: 0
@@ -25,7 +57,7 @@ Window {
             anchors.fill:parent
 
         }
-        onClicked: LinphoneController.initThread()
+        onClicked: {LinphoneController.initThread();
 
     }
     Button {
@@ -50,9 +82,10 @@ Window {
         id: call
         width: 320
         height: 240
+        anchors.centerIn:parent
 
         contentItem: Rectangle {
-            color: "lightskyblue"
+            color: "yellow"
             anchors.fill: parent
 
             Text {
@@ -64,7 +97,10 @@ Window {
                 id: b_accept
                 width: 70
                 height: 70
-
+                anchors.left:parent.left
+                anchors.top:parent.top
+                anchors.leftMargin: 70
+                anchors.topMargin: 150
                 background: Rectangle{
                     radius: 100
                     color: "lightgreen"
@@ -77,8 +113,10 @@ Window {
                 id: b_decline
                 width: 70
                 height: 70
-                anchors.left: b_accept.right
-                anchors.leftMargin: 100
+                anchors.right:parent.right
+                anchors.top:parent.top
+                anchors.rightMargin: 70
+                anchors.topMargin: 150
                 background: Rectangle{
                     radius: 100
                     color: "red"
@@ -89,22 +127,22 @@ Window {
             }
         }
     }
-//    Dialog {
-//        id: call_init
-//        width: parent
-//        height: parent
+    Dialog {
+        id: call_init
+        width: parent
+        height: parent
 
-//        contentItem: Rectangle {
-//            color: "lightskyblue"
-//            anchors.fill: parent
+        contentItem: Rectangle {
+            color: "lightskyblue"
+            anchors.fill: parent
 
-//            Text {
-//                text: "Ligação em andamento"
-//                color: "navy"
-//                anchors.centerIn: parent
-//            }
-//        }
-//    }
+            Text {
+                text: "Ligação em andamento"
+                color: "navy"
+                anchors.centerIn: parent
+            }
+        }
+    }
 
     Connections {
         target: LinphoneController
@@ -130,4 +168,5 @@ Window {
             call_init.open()
         }
     }
+}
 }

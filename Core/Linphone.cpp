@@ -4,7 +4,8 @@
 #include <linphone/core.h>
 #include <signal.h>
 #include <QThread>
-
+#include <QCameraInfo>
+#include <QDebug>
 LinphoneCore *lc;
 
 static bool_t running=TRUE;
@@ -142,12 +143,32 @@ void LinphoneController::accept(){
     emit acceptCall();
 }
 
+
+
+
+
+
+
+
 void LinphoneController::decline(){
     LinphoneReason Reason;
     LinphoneCall *call=NULL;
     linphone_core_decline_call(lc,call,Reason);
 
     emit declineCall();
+}
+
+bool Video::checkCameras()
+{
+    int camCount = QCameraInfo::availableCameras().count();
+    if ( camCount > 0) {
+        qDebug() << "Cameras encontradas: " << camCount << endl;
+        return true;
+    }
+    else {
+        qDebug() << "Nenhuma camera foi detectada!" << endl;
+        return false;
+    }
 }
 
 
