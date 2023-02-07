@@ -1,11 +1,8 @@
 QT += quick
 QT += quick core gui multimedia quickcontrols2
-QT       += multimedia multimediawidgets
+QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = QtCamera
-TEMPLATE = app
 
 win32: RC_ICONS += app.ico
 

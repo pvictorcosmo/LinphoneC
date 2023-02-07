@@ -4,11 +4,11 @@
 #include <linphone/core.h>
 #include <signal.h>
 #include <QThread>
-#include <QCameraInfo>
 #include <QDebug>
 #include "QtCamera.h"
 #include <QApplication>
 #include <QQuickView>
+
 LinphoneCore *lc;
 
 static bool_t running=TRUE;
@@ -48,7 +48,7 @@ int LinphoneController::linphoneCalling(){
     const char *dest=NULL;
     /* take the destination sip uri from the command line arguments */
     vtable.call_state_changed=call_state_changed;
-    dest="sip:Leo@192.168.200.121";
+    dest="sip:paulodiego@192.168.200.34";
        if (dest){
                 /*
                  Place an outgoing call
@@ -130,13 +130,14 @@ void LinphoneController::accept()
 {
     LinphoneCall *call=NULL;
     linphone_core_accept_call(lc,call);
+    linphone_core_get_camera_sensor_rotation(lc);
+
     emit acceptCall();
 
 }
 
 void LinphoneController::decline()
 {
-
     LinphoneCall *call=NULL;
     linphone_core_terminate_call(lc,call);
     linphone_call_unref(call);

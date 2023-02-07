@@ -124,13 +124,13 @@ Window {
             }
 
             VideoOutput {
-                source: "dev/video0"
+                source: camera
                 focus : visible // to receive focus and capture key events when visible
                 anchors.fill: parent
 
                 MouseArea {
                     anchors.fill: parent;
-                    onClicked: camera.imageCapture.capture();
+                    onClicked: camera.
                 }
             }
 
