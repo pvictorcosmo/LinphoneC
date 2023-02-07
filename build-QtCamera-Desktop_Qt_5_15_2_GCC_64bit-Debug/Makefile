@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_MULTIMEDIAWIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_QUICKCONTROLS2_LIB -DQT_QUICK_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../QtCamera -I. -I../../../Qt/5.15.2/gcc_64/include -I../../../Qt/5.15.2/gcc_64/include/QtMultimediaWidgets -I../../../Qt/5.15.2/gcc_64/include/QtMultimedia -I../../../Qt/5.15.2/gcc_64/include/QtWidgets -I../../../Qt/5.15.2/gcc_64/include/QtGui -I../../../Qt/5.15.2/gcc_64/include/QtNetwork -I../../../Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/libdrm -I../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../QtCamera -I. -I../../../Qt/5.15.2/gcc_64/include -I../../../Qt/5.15.2/gcc_64/include/QtQuickControls2 -I../../../Qt/5.15.2/gcc_64/include/QtQuick -I../../../Qt/5.15.2/gcc_64/include/QtMultimediaWidgets -I../../../Qt/5.15.2/gcc_64/include/QtMultimedia -I../../../Qt/5.15.2/gcc_64/include/QtWidgets -I../../../Qt/5.15.2/gcc_64/include/QtGui -I../../../Qt/5.15.2/gcc_64/include/QtQmlModels -I../../../Qt/5.15.2/gcc_64/include/QtQml -I../../../Qt/5.15.2/gcc_64/include/QtNetwork -I../../../Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/libdrm -I../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/paulovictor/Qt/5.15.2/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = QtCamera1.0.0
 DISTDIR = /home/paulovictor/Projects/LinphoneC/build-QtCamera-Desktop_Qt_5_15_2_GCC_64bit-Debug/.tmp/QtCamera1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/paulovictor/Qt/5.15.2/gcc_64/lib -Wl,-rpath-link,/home/paulovictor/Qt/5.15.2/gcc_64/lib
-LIBS          = $(SUBLIBS) /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5MultimediaWidgets.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Multimedia.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Widgets.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Gui.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Network.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5QuickControls2.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Quick.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5MultimediaWidgets.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Multimedia.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Widgets.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Gui.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5QmlModels.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Qml.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Network.so /home/paulovictor/Qt/5.15.2/gcc_64/lib/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -247,6 +247,7 @@ DIST          = ../../../Qt/5.15.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/spec_post.prf \
+		../QtCamera/.qmake.stash \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf \
@@ -470,6 +471,7 @@ Makefile: ../QtCamera/QtCamera.pro ../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/q
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf \
@@ -682,6 +684,7 @@ Makefile: ../QtCamera/QtCamera.pro ../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/q
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/qt_config.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/toolchain.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf:
@@ -884,7 +887,7 @@ moc_QtCamera.cpp: ../QtCamera/QtCamera.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qbasictimer.h \
 		moc_predefs.h \
 		../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/paulovictor/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/paulovictor/Projects/LinphoneC/build-QtCamera-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/paulovictor/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/paulovictor/Projects/LinphoneC/QtCamera -I/home/paulovictor/Qt/5.15.2/gcc_64/include -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtMultimediaWidgets -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtMultimedia -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtGui -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../QtCamera/QtCamera.h -o moc_QtCamera.cpp
+	/home/paulovictor/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/paulovictor/Projects/LinphoneC/build-QtCamera-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/paulovictor/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/paulovictor/Projects/LinphoneC/QtCamera -I/home/paulovictor/Qt/5.15.2/gcc_64/include -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtQuickControls2 -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtQuick -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtMultimediaWidgets -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtMultimedia -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtGui -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtQml -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/paulovictor/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../QtCamera/QtCamera.h -o moc_QtCamera.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:

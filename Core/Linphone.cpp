@@ -6,6 +6,9 @@
 #include <QThread>
 #include <QCameraInfo>
 #include <QDebug>
+#include "QtCamera.h"
+#include <QApplication>
+#include <QQuickView>
 LinphoneCore *lc;
 
 static bool_t running=TRUE;
@@ -13,9 +16,6 @@ static void stop(int signum){
         running=FALSE;
 }
 
-/*
- * Call state notification callback
- */
 static void call_state_changed(LinphoneCore *lc, LinphoneCall *call, LinphoneCallState cstate, const char *msg){
     switch(cstate){
             case LinphoneCallOutgoingRinging:
@@ -64,10 +64,6 @@ int LinphoneController::linphoneCalling(){
     while(running){
             linphone_core_iterate(lc);
             ms_usleep(50000);
-//            if(LinphoneCallStateIncomingReceived){
-//                 linphone_core_accept_call(lc,call);
-
-//            }
     }
         if (call && linphone_call_get_state(call)!=LinphoneCallEnd){
                 /* terminate the call */
@@ -76,13 +72,6 @@ int LinphoneController::linphoneCalling(){
                 /*at this stage we don't need the call object */
                 linphone_call_unref(call);
         }
-
-
-
-    printf("Shutting down...\n");
-
-    printf("Exited\n");
-
 
     emit callingOk();
     return 0;
@@ -110,14 +99,13 @@ void LinphoneWorker::doWork()
             else
                 emit callReceived(false);
         }
-
-        //qDebug() << "Outra thread";
     emit callReceived(false);
 
 }
 
 
-LinphoneController::LinphoneController() {
+LinphoneController::LinphoneController()
+{
     LinphoneWorker *worker = new LinphoneWorker;
     worker->moveToThread(&workerThread);
     connect(&workerThread, &QThread::finished, worker, &QObject::deleteLater);
@@ -126,7 +114,8 @@ LinphoneController::LinphoneController() {
     workerThread.start();
 }
 
-LinphoneController::~LinphoneController(){
+LinphoneController::~LinphoneController()
+{
     workerThread.quit();
     workerThread.wait();
 }
@@ -137,39 +126,24 @@ void LinphoneController::onCallReceived(const bool result)
         emit openCall();
 }
 
-void LinphoneController::accept(){
+void LinphoneController::accept()
+{
     LinphoneCall *call=NULL;
     linphone_core_accept_call(lc,call);
     emit acceptCall();
+
 }
 
-
-
-
-
-
-
-
-void LinphoneController::decline(){
-    LinphoneReason Reason;
-    LinphoneCall *call=NULL;
-    linphone_core_decline_call(lc,call,Reason);
-
-    emit declineCall();
-}
-
-bool Video::checkCameras()
+void LinphoneController::decline()
 {
-    int camCount = QCameraInfo::availableCameras().count();
-    if ( camCount > 0) {
-        qDebug() << "Cameras encontradas: " << camCount << endl;
-        return true;
-    }
-    else {
-        qDebug() << "Nenhuma camera foi detectada!" << endl;
-        return false;
-    }
+
+    LinphoneCall *call=NULL;
+    linphone_core_terminate_call(lc,call);
+    linphone_call_unref(call);
+    emit declineCall();
+
 }
+
 
 
 

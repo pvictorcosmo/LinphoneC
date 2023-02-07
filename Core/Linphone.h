@@ -68,12 +68,6 @@ class Linphone : public QObject{
 
 };
 
-class Video : public QObject{
-public:
-    bool checkCameras();
-
-};
-
 
 
 

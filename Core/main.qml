@@ -2,64 +2,25 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import LinphoneController 1.0
- import QtMultimedia 5.15
+
 Window {
     width: 640
     height: 480
     visible: true
-    title: qsTr("Hello World")
-
-        Camera {
-            id: camera
-
-            imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
-
-            exposure {
-                exposureCompensation: -1.0
-                exposureMode: Camera.ExposurePortrait
-            }
-
-            flash.mode: Camera.FlashRedEyeReduction
-
-            imageCapture {
-                onImageCaptured: {
-                    photoPreview.source = preview  // Show the preview in an Image
-                }
-            }
-        }
-
-        VideoOutput {
-            source: camera
-            anchors.fill: parent
-            focus : visible // to receive focus and capture key events when visible
-        }
-
-        Image {
-            id: photoPreview
-        }
-
-
-
+    title: qsTr("Linphone")
 
     Button {
         property int value: 0
         width: parent.width
         height: parent.height
 
-//        TextInput {
-//            text: "Text"
-//            cursorVisible: true
-//        }
-        //anchors.centerIn: parent
-
         background: Rectangle{
             color: "lightskyblue"
             anchors.fill:parent
 
         }
-        onClicked: {LinphoneController.initThread();
+        onClicked:LinphoneController.initThread();
 
-    }
     Button {
         id: b_call
         width: 200
@@ -84,9 +45,11 @@ Window {
         height: 240
         anchors.centerIn:parent
 
+
         contentItem: Rectangle {
             color: "yellow"
             anchors.fill: parent
+
 
             Text {
                 text: "Deseja atender essa ligação?"

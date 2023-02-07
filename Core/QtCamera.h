@@ -12,12 +12,12 @@ LICENSE: MIT
 #include <QCameraInfo>
 #include <QVideoWidget>
 #include <QTimer>
-
+#include <QQuickView>
 class QtCamera : public QObject
 {
     Q_OBJECT
 public:
-    QtCamera();
+    QtCamera(QQuickView *view);
     ~QtCamera();
 
     bool start();
@@ -47,9 +47,6 @@ private:
     QCameraInfo        m_curCameraInfo;
     QList<QCameraInfo> m_curCameraInfoList;
     QList<QCameraInfo> m_preCameraInfoList;
-public slots:
-    void startCall();
-
 };
 
 #endif // QT_CAMERA_H
