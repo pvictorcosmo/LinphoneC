@@ -50,14 +50,16 @@ int LinphoneController::linphoneCalling() {
   const char *dest = NULL;
   /* take the destination sip uri from the command line arguments */
   vtable.call_state_changed = call_state_changed;
-  dest = "sip:paulovictor@192.168.201.223";
+  dest = "sip:kingkrimson@sip.linphone.org";
   if (dest) {
     /*
      Place an outgoing call
     */
+
+    linphone_core_enable_video_capture(lc, TRUE);
+    linphone_core_enable_video_display(lc, TRUE);
+    linphone_core_enable_self_view(lc, FALSE);
     call = linphone_core_invite(lc, dest);
-    linphone_core_enable_video(lc, true, true);
-    linphone_core_enable_self_view(lc, false);
 
     if (call == NULL) {
       printf("Could not place call to %s\n", dest);
