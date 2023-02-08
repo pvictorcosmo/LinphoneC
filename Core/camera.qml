@@ -10,7 +10,7 @@ Item {
     visible: isRunning
 
     //! Linphone camera is running
-    readonly property bool running: cameraViewer.ready && LinphoneController.i
+    readonly property bool running: cameraViewer.ready
 
 
     CameraView {

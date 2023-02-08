@@ -1,27 +1,18 @@
 #include "Linphone.h"
-<<<<<<< HEAD
-=======
+
 #include <QDebug>
 #include <QThread>
 #include <iostream>
 #include <linphone/core.h>
 #include <signal.h>
-        >>>>>>> master
+
 #include "QtCamera.h"
 #include <QApplication>
 #include <QCameraInfo>
 #include <QDebug>
 #include <QQuickView>
-        < < < < < < < HEAD
-#include <QThread>
-#include <iostream>
-#include <linphone/core.h>
-#include <signal.h>
-    == == ==
-    =
 
->>>>>>> master
-        LinphoneCore * lc;
+LinphoneCore *lc;
 
 static bool_t running = TRUE;
 static void stop(int signum) { running = FALSE; }
@@ -67,6 +58,7 @@ int LinphoneController::linphoneCalling() {
     call = linphone_core_invite(lc, dest);
     linphone_core_enable_video(lc, true, true);
     linphone_core_enable_self_view(lc, false);
+
     if (call == NULL) {
       printf("Could not place call to %s\n", dest);
 
@@ -88,74 +80,8 @@ int LinphoneController::linphoneCalling() {
     linphone_call_unref(call);
   }
 
-<<<<<<< HEAD
   emit callingOk();
   return 0;
-=======
-  static void call_state_changed(LinphoneCore * lc, LinphoneCall * call,
-                                 LinphoneCallState cstate, const char *msg) {
-    switch (cstate) {
-    case LinphoneCallOutgoingRinging:
-      printf("It is now ringing remotely !\n");
-      break;
-    case LinphoneCallOutgoingEarlyMedia:
-      printf("Receiving some early media\n");
-      break;
-    case LinphoneCallConnected:
-      printf("We are connected !\n");
-      break;
-    case LinphoneCallStreamsRunning:
-      printf("Media streams established !\n");
-      break;
-    case LinphoneCallEnd:
-      printf("Call is terminated.\n");
-      break;
-    case LinphoneCallError:
-      printf("Call failure !");
-      break;
-
-    default:
-      printf("Unhandled notification %i\n", cstate);
-    }
-  }
-  int LinphoneController::linphoneCalling() {
-
-    LinphoneCoreVTable vtable = {0};
-    LinphoneCall *call = NULL;
-    const char *dest = NULL;
-    /* take the destination sip uri from the command line arguments */
-    vtable.call_state_changed = call_state_changed;
-    dest = "sip:paulodiego@192.168.200.34";
-    if (dest) {
-      /*
-       Place an outgoing call
-      */
-      call = linphone_core_invite(lc, dest);
-      if (call == NULL) {
-        printf("Could not place call to %s\n", dest);
-
-      } else
-        printf("Call to %s is in progress...", dest);
-      linphone_call_ref(call);
-    }
-    /* main loop for receiving notifications and doing background linphonecore
-     * work: */
-    while (running) {
-      linphone_core_iterate(lc);
-      ms_usleep(50000);
-    }
-    if (call && linphone_call_get_state(call) != LinphoneCallEnd) {
-      /* terminate the call */
-      printf("Terminating the call...\n");
-      linphone_core_terminate_call(lc, call);
-      /*at this stage we don't need the call object */
-      linphone_call_unref(call);
-    }
-
-    emit callingOk();
-    return 0;
-
->>>>>>> master
 }
 
 void LinphoneWorker::doWork() {
@@ -199,32 +125,13 @@ void LinphoneController::onCallReceived(const bool result) {
     emit openCall();
 }
 
-<<<<<<< HEAD
 void LinphoneController::accept() {
   LinphoneCall *call = NULL;
   linphone_core_accept_call(lc, call);
-=======
-  void LinphoneController::accept() {
-    LinphoneCall *call = NULL;
-    linphone_core_accept_call(lc, call);
-    linphone_core_get_camera_sensor_rotation(lc);
-
-    emit acceptCall();
->>>>>>> master
-
   emit acceptCall();
 }
 
-<<<<<<< HEAD
 void LinphoneController::decline() {
-=======
-  void LinphoneController::decline() {
-    LinphoneCall *call = NULL;
-    linphone_core_terminate_call(lc, call);
-    linphone_call_unref(call);
-    emit declineCall();
->>>>>>> master
-
   LinphoneCall *call = NULL;
   linphone_core_terminate_call(lc, call);
   linphone_call_unref(call);
