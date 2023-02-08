@@ -50,7 +50,7 @@ int LinphoneController::linphoneCalling() {
   const char *dest = NULL;
   /* take the destination sip uri from the command line arguments */
   vtable.call_state_changed = call_state_changed;
-  dest = "sip:kingkrimson@sip.linphone.org";
+  dest = "sip:paulovictor@192.168.201.223";
   if (dest) {
     /*
      Place an outgoing call
@@ -59,6 +59,7 @@ int LinphoneController::linphoneCalling() {
     linphone_core_enable_video_capture(lc, TRUE);
     linphone_core_enable_video_display(lc, TRUE);
     linphone_core_enable_self_view(lc, FALSE);
+
     call = linphone_core_invite(lc, dest);
 
     if (call == NULL) {
@@ -129,6 +130,9 @@ void LinphoneController::onCallReceived(const bool result) {
 
 void LinphoneController::accept() {
   LinphoneCall *call = NULL;
+  linphone_core_enable_video_capture(lc, TRUE);
+  linphone_core_enable_video_display(lc, TRUE);
+  linphone_core_enable_self_view(lc, FALSE);
   linphone_core_accept_call(lc, call);
   emit acceptCall();
 }
