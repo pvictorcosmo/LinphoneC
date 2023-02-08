@@ -56,7 +56,7 @@ Window {
 
 
         contentItem: Rectangle {
-            color: "yellow"
+            color: "grey"
             anchors.fill: parent
 
 
@@ -105,39 +105,39 @@ Window {
     }
     Dialog {
         id: call_init
-        width: parent
-        height: parent
+        width: 640
+        height: 480
 
-        Item {
-            width: 640
-            height: 360
+//        Item {
+//            width: 640
+//            height: 360
 
-            Camera {
-                id: camera
+//            Camera {
+//                id: camera
 
-                imageCapture {
-                    onImageCaptured: {
-                        // Show the preview in an Image
-                        photoPreview.source = preview
-                    }
-                }
-            }
+//                imageCapture {
+//                    onImageCaptured: {
+//                        // Show the preview in an Image
+//                        photoPreview.source = preview
+//                    }
+//                }
+//            }
 
-            VideoOutput {
-                source: "dev/video0"
-                focus : visible // to receive focus and capture key events when visible
-                anchors.fill: parent
+//            VideoOutput {
+//                source: camera
+//                focus : visible // to receive focus and capture key events when visible
+//                anchors.fill: parent
 
-                MouseArea {
-                    anchors.fill: parent;
-                    onClicked: camera.imageCapture.capture();
-                }
-            }
+//                MouseArea {
+//                    anchors.fill: parent;
+//                    onClicked: camera.imageCapture.capture();
+//                }
+//            }
 
-            Image {
-                id: photoPreview
-            }
-        }
+//            Image {
+//                id: photoPreview
+//            }
+//        }
 
 
         contentItem: Rectangle {
@@ -145,9 +145,24 @@ Window {
             anchors.fill: parent
 
             Text {
+                anchors.centerIn: parent
                 text: "Ligação em andamento"
                 color: "navy"
 
+            }
+
+            Button{
+                id: decline_call
+                width: 70
+                height: 70
+                anchors.bottomMargin:15
+                background: Rectangle{
+                    radius: 100
+                    color: "red"
+                    anchors.fill:parent
+                }
+
+                onClicked: LinphoneController.decline()
             }
         }
     }
@@ -181,6 +196,7 @@ Window {
         function onCallInit()
         {
             call_init.open()
+
         }
     }
 }

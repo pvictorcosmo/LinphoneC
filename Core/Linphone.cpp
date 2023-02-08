@@ -10,6 +10,7 @@
 #include <QQuickView>
 
 LinphoneCore *lc;
+LinphoneCall *call=NULL;
 
 static bool_t running=TRUE;
 static void stop(int signum){
@@ -44,7 +45,7 @@ static void call_state_changed(LinphoneCore *lc, LinphoneCall *call, LinphoneCal
 int LinphoneController::linphoneCalling(){
 
     LinphoneCoreVTable vtable={0};
-    LinphoneCall *call=NULL;
+
     const char *dest=NULL;
     /* take the destination sip uri from the command line arguments */
     vtable.call_state_changed=call_state_changed;
@@ -128,22 +129,21 @@ void LinphoneController::onCallReceived(const bool result)
 
 void LinphoneController::accept()
 {
-    LinphoneCall *call=NULL;
     linphone_core_accept_call(lc,call);
     linphone_core_get_camera_sensor_rotation(lc);
-
     emit acceptCall();
 
 }
 
 void LinphoneController::decline()
 {
-    LinphoneCall *call=NULL;
-    linphone_core_terminate_call(lc,call);
     linphone_call_unref(call);
+    linphone_core_terminate_call(lc,call);
     emit declineCall();
 
 }
+
+
 
 
 
