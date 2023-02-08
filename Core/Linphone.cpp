@@ -55,9 +55,10 @@ int LinphoneController::linphoneCalling() {
     /*
      Place an outgoing call
     */
+
+    linphone_core_enable_video(lc, TRUE, TRUE);
+    linphone_core_enable_self_view(lc, FALSE);
     call = linphone_core_invite(lc, dest);
-    linphone_core_enable_video(lc, true, true);
-    linphone_core_enable_self_view(lc, false);
 
     if (call == NULL) {
       printf("Could not place call to %s\n", dest);
