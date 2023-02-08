@@ -103,6 +103,7 @@ Window {
             }
         }
     }
+<<<<<<< HEAD
     Dialog {
         id: call_init
         width: 640
@@ -138,12 +139,59 @@ Window {
 //                id: photoPreview
 //            }
 //        }
+=======
+//    Dialog {
+//        id: call_init
+//        width: parent
+//        height: parent
 
 
-        contentItem: Rectangle {
-            color: "lightskyblue"
-            anchors.fill: parent
+//        Item {
+//            width: 640
+//            height: 360
 
+//            Camera {
+//                id: camera
+>>>>>>> master
+
+//                imageCapture {
+//                    onImageCaptured: {
+//                        // Show the preview in an Image
+//                        photoPreview.source = preview
+//                    }
+//                }
+//            }
+
+//            VideoOutput {
+//                source: "dev/video0"
+//                focus : visible // to receive focus and capture key events when visible
+//                anchors.fill: parent
+
+//                MouseArea {
+//                    anchors.fill: parent;
+//                    onClicked: camera.imageCapture.capture();
+//                }
+//            }
+
+//            Image {
+//                id: photoPreview
+//            }
+//        }
+
+
+//        contentItem: Rectangle {
+//            color: "lightskyblue"
+//            anchors.fill: parent
+
+//            Text {
+//                text: "Ligação em andamento"
+//                color: "navy"
+
+//            }
+//        }
+//    }
+
+<<<<<<< HEAD
             Text {
                 anchors.centerIn: parent
                 text: "Ligação em andamento"
@@ -166,6 +214,9 @@ Window {
             }
         }
     }
+=======
+
+>>>>>>> master
 
 
     Connections {
