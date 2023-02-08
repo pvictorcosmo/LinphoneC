@@ -93,8 +93,15 @@ int LinphoneController::linphoneCalling() {
      Place an outgoing call
     */
 
+<<<<<<< HEAD
     linphone_core_enable_video(lc, TRUE, TRUE);
     linphone_core_enable_self_view(lc, FALSE);
+=======
+    linphone_core_enable_video_capture(lc, TRUE);
+    linphone_core_enable_video_display(lc, TRUE);
+    linphone_core_enable_self_view(lc, FALSE);
+
+>>>>>>> master
     call = linphone_core_invite(lc, dest);
 
     if (call == NULL) {
@@ -191,6 +198,9 @@ void LinphoneController::decline()
 =======
 void LinphoneController::accept() {
   LinphoneCall *call = NULL;
+  linphone_core_enable_video_capture(lc, TRUE);
+  linphone_core_enable_video_display(lc, TRUE);
+  linphone_core_enable_self_view(lc, FALSE);
   linphone_core_accept_call(lc, call);
   emit acceptCall();
 }
