@@ -16,7 +16,17 @@ LinphoneCore *lc;
 LinphoneCall *call=NULL;
 
 static bool_t running = TRUE;
+
 static void stop(int signum) { running = FALSE; }
+
+static void initialCamConf() {
+  linphone_core_enable_video_capture(
+      lc, TRUE); //  Preparando o core pra captura de video
+  linphone_core_enable_video_display(
+      lc, TRUE); //  Preparando o core pra display de video
+  linphone_core_enable_self_view(
+      lc, FALSE); //  Desabilita a visualização da minha prórpia camera
+}
 
 static void call_state_changed(LinphoneCore *lc, LinphoneCall *call,
                                LinphoneCallState cstate, const char *msg) {
@@ -92,6 +102,7 @@ int LinphoneController::linphoneCalling() {
     /*
      Place an outgoing call
     */
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     linphone_core_enable_video(lc, TRUE, TRUE);
@@ -101,6 +112,9 @@ int LinphoneController::linphoneCalling() {
     linphone_core_enable_video_display(lc, TRUE);
     linphone_core_enable_self_view(lc, FALSE);
 
+>>>>>>> master
+=======
+    initialCamConf();
 >>>>>>> master
     call = linphone_core_invite(lc, dest);
 
@@ -198,9 +212,7 @@ void LinphoneController::decline()
 =======
 void LinphoneController::accept() {
   LinphoneCall *call = NULL;
-  linphone_core_enable_video_capture(lc, TRUE);
-  linphone_core_enable_video_display(lc, TRUE);
-  linphone_core_enable_self_view(lc, FALSE);
+  initialCamConf();
   linphone_core_accept_call(lc, call);
   emit acceptCall();
 }
