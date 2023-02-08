@@ -30,6 +30,7 @@ public:
         // C++ and QML instance they are the same instance
         return &LinphoneController::getInstance();
     }
+    void Create();
 
     Q_INVOKABLE void initThread() {
         emit operate();
@@ -62,11 +63,6 @@ signals:
     void callInit();
 };
 
-class Linphone : public QObject{
- public:
-
-
-};
 
 
 
