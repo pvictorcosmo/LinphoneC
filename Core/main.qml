@@ -37,11 +37,9 @@ Window {
                 color: "red"
                 anchors.fill:parent
             }
-            onClicked:
-            {
-                LinphoneController.linphoneCalling();
-                LinphoneController.callInitialization();
-            }
+            onClicked: LinphoneController.linphoneCalling();
+
+
 
 
 

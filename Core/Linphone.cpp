@@ -91,12 +91,12 @@ void LinphoneController::CreateAccount(){
 
 int LinphoneController::linphoneCalling() {
 
-    LinphoneController v;
-    v.CreateAccount();
+//    LinphoneController v;
+//    v.CreateAccount();
 
     const char *dest = NULL;
     /* take the destination sip uri from the command line arguments */
-    dest = "sip:paulovictor@192.168.201.223";
+    dest = "sip:paulodiego@192.168.200.34";
     if (dest) {
         /*
      Place an outgoing call
@@ -202,7 +202,8 @@ void LinphoneController::decline_call()
 
 void LinphoneController::mute_call()
 {
-    //linphone_conference_mute_microphone
+    LinphoneConference *conf;
+    //linphone_conference_mute_microphone(conf);
     qDebug() << "Mic mutado";
 
     emit muteCall();
