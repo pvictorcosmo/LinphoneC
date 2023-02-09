@@ -33,8 +33,10 @@ public:
   Q_INVOKABLE void initThread() { emit operate(); }
   Q_INVOKABLE void accept();
   Q_INVOKABLE void decline();
+  Q_INVOKABLE void decline_call();
   Q_INVOKABLE int linphoneCalling();
   Q_INVOKABLE void callInitialization() { emit callInit(); }
+  Q_INVOKABLE void mute_call();
   void CreateAccount();
 
 public slots:
@@ -52,8 +54,10 @@ signals:
   void openCall();
   void acceptCall();
   void declineCall();
+  void declineInCall();
   void callingOk();
   void callInit();
+  void muteCall();
 };
 
 #endif // LINPHONE_H
