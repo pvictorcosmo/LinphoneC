@@ -177,7 +177,7 @@ void LinphoneController::onCallReceived(const bool result)
     LinphoneConference *conf;
     if (result){
         emit openCall();
-//        linphone_username
+        //        linphone_username
     }
 
 }
@@ -190,15 +190,15 @@ void LinphoneController::accept()
 
 void LinphoneController::decline()
 {
-  linphone_core_terminate_call(lc, call);
-  linphone_core_destroy(lc);
-  linphone_call_unref(call);
-  emit declineCall();
+    linphone_core_terminate_call(lc, call);
+    linphone_core_destroy(lc);
+    linphone_call_unref(call);
+    emit declineCall();
 }
 
 void LinphoneController::decline_call()
 {
-    linphone_core_terminate_all_calls 	(lc);
+    linphone_core_terminate_all_calls(lc);
     emit declineInCall();
 }
 

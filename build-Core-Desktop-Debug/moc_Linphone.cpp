@@ -141,8 +141,8 @@ void LinphoneWorker::callReceived(const bool _t1)
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 struct qt_meta_stringdata_LinphoneController_t {
-    QByteArrayData data[15];
-    char stringdata0[162];
+    QByteArrayData data[19];
+    char stringdata0[208];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -157,22 +157,27 @@ QT_MOC_LITERAL(2, 27, 0), // ""
 QT_MOC_LITERAL(3, 28, 8), // "openCall"
 QT_MOC_LITERAL(4, 37, 10), // "acceptCall"
 QT_MOC_LITERAL(5, 48, 11), // "declineCall"
-QT_MOC_LITERAL(6, 60, 9), // "callingOk"
-QT_MOC_LITERAL(7, 70, 8), // "callInit"
-QT_MOC_LITERAL(8, 79, 14), // "onCallReceived"
-QT_MOC_LITERAL(9, 94, 6), // "result"
-QT_MOC_LITERAL(10, 101, 10), // "initThread"
-QT_MOC_LITERAL(11, 112, 6), // "accept"
-QT_MOC_LITERAL(12, 119, 7), // "decline"
-QT_MOC_LITERAL(13, 127, 15), // "linphoneCalling"
-QT_MOC_LITERAL(14, 143, 18) // "callInitialization"
+QT_MOC_LITERAL(6, 60, 13), // "declineInCall"
+QT_MOC_LITERAL(7, 74, 9), // "callingOk"
+QT_MOC_LITERAL(8, 84, 8), // "callInit"
+QT_MOC_LITERAL(9, 93, 8), // "muteCall"
+QT_MOC_LITERAL(10, 102, 14), // "onCallReceived"
+QT_MOC_LITERAL(11, 117, 6), // "result"
+QT_MOC_LITERAL(12, 124, 10), // "initThread"
+QT_MOC_LITERAL(13, 135, 6), // "accept"
+QT_MOC_LITERAL(14, 142, 7), // "decline"
+QT_MOC_LITERAL(15, 150, 12), // "decline_call"
+QT_MOC_LITERAL(16, 163, 15), // "linphoneCalling"
+QT_MOC_LITERAL(17, 179, 18), // "callInitialization"
+QT_MOC_LITERAL(18, 198, 9) // "mute_call"
 
     },
     "LinphoneController\0operate\0\0openCall\0"
-    "acceptCall\0declineCall\0callingOk\0"
-    "callInit\0onCallReceived\0result\0"
-    "initThread\0accept\0decline\0linphoneCalling\0"
-    "callInitialization"
+    "acceptCall\0declineCall\0declineInCall\0"
+    "callingOk\0callInit\0muteCall\0onCallReceived\0"
+    "result\0initThread\0accept\0decline\0"
+    "decline_call\0linphoneCalling\0"
+    "callInitialization\0mute_call"
 };
 #undef QT_MOC_LITERAL
 
@@ -182,30 +187,34 @@ static const uint qt_meta_data_LinphoneController[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       6,       // signalCount
+       8,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x06 /* Public */,
-       3,    0,   75,    2, 0x06 /* Public */,
-       4,    0,   76,    2, 0x06 /* Public */,
-       5,    0,   77,    2, 0x06 /* Public */,
-       6,    0,   78,    2, 0x06 /* Public */,
-       7,    0,   79,    2, 0x06 /* Public */,
+       1,    0,   94,    2, 0x06 /* Public */,
+       3,    0,   95,    2, 0x06 /* Public */,
+       4,    0,   96,    2, 0x06 /* Public */,
+       5,    0,   97,    2, 0x06 /* Public */,
+       6,    0,   98,    2, 0x06 /* Public */,
+       7,    0,   99,    2, 0x06 /* Public */,
+       8,    0,  100,    2, 0x06 /* Public */,
+       9,    0,  101,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       8,    1,   80,    2, 0x0a /* Public */,
+      10,    1,  102,    2, 0x0a /* Public */,
 
  // methods: name, argc, parameters, tag, flags
-      10,    0,   83,    2, 0x02 /* Public */,
-      11,    0,   84,    2, 0x02 /* Public */,
-      12,    0,   85,    2, 0x02 /* Public */,
-      13,    0,   86,    2, 0x02 /* Public */,
-      14,    0,   87,    2, 0x02 /* Public */,
+      12,    0,  105,    2, 0x02 /* Public */,
+      13,    0,  106,    2, 0x02 /* Public */,
+      14,    0,  107,    2, 0x02 /* Public */,
+      15,    0,  108,    2, 0x02 /* Public */,
+      16,    0,  109,    2, 0x02 /* Public */,
+      17,    0,  110,    2, 0x02 /* Public */,
+      18,    0,  111,    2, 0x02 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -214,15 +223,19 @@ static const uint qt_meta_data_LinphoneController[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Bool,    9,
+    QMetaType::Void, QMetaType::Bool,   11,
 
  // methods: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Int,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -238,15 +251,19 @@ void LinphoneController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         case 1: _t->openCall(); break;
         case 2: _t->acceptCall(); break;
         case 3: _t->declineCall(); break;
-        case 4: _t->callingOk(); break;
-        case 5: _t->callInit(); break;
-        case 6: _t->onCallReceived((*reinterpret_cast< const bool(*)>(_a[1]))); break;
-        case 7: _t->initThread(); break;
-        case 8: _t->accept(); break;
-        case 9: _t->decline(); break;
-        case 10: { int _r = _t->linphoneCalling();
+        case 4: _t->declineInCall(); break;
+        case 5: _t->callingOk(); break;
+        case 6: _t->callInit(); break;
+        case 7: _t->muteCall(); break;
+        case 8: _t->onCallReceived((*reinterpret_cast< const bool(*)>(_a[1]))); break;
+        case 9: _t->initThread(); break;
+        case 10: _t->accept(); break;
+        case 11: _t->decline(); break;
+        case 12: _t->decline_call(); break;
+        case 13: { int _r = _t->linphoneCalling();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 11: _t->callInitialization(); break;
+        case 14: _t->callInitialization(); break;
+        case 15: _t->mute_call(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -281,15 +298,29 @@ void LinphoneController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         }
         {
             using _t = void (LinphoneController::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LinphoneController::callingOk)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LinphoneController::declineInCall)) {
                 *result = 4;
                 return;
             }
         }
         {
             using _t = void (LinphoneController::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LinphoneController::callInit)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LinphoneController::callingOk)) {
                 *result = 5;
+                return;
+            }
+        }
+        {
+            using _t = void (LinphoneController::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LinphoneController::callInit)) {
+                *result = 6;
+                return;
+            }
+        }
+        {
+            using _t = void (LinphoneController::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&LinphoneController::muteCall)) {
+                *result = 7;
                 return;
             }
         }
@@ -325,13 +356,13 @@ int LinphoneController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 16)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 16;
     }
     return _id;
 }
@@ -361,15 +392,27 @@ void LinphoneController::declineCall()
 }
 
 // SIGNAL 4
-void LinphoneController::callingOk()
+void LinphoneController::declineInCall()
 {
     QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
 }
 
 // SIGNAL 5
-void LinphoneController::callInit()
+void LinphoneController::callingOk()
 {
     QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
+}
+
+// SIGNAL 6
+void LinphoneController::callInit()
+{
+    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
+}
+
+// SIGNAL 7
+void LinphoneController::muteCall()
+{
+    QMetaObject::activate(this, &staticMetaObject, 7, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

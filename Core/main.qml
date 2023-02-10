@@ -203,25 +203,28 @@ Window {
         function onAcceptCall()
         {
             console.log("Call aceita");
+            call.closed()
         }
         function onDeclineCall()
         {
             console.log("Call declined")
-            call_init.close()
+            call.closed()
         }
         function onCallingOk()
         {
             console.log("Call iniciada")
+            call.close()
+
         }
         function onCallInit()
         {
             call_init.open()
-
         }
         function onDeclineInCall()
         {
             console.log("Ligação encerrada")
             call_init.close()
+
 
         }
 
