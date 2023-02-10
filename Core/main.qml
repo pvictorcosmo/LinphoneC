@@ -39,10 +39,6 @@ Window {
             }
             onClicked: LinphoneController.linphoneCalling();
 
-
-
-
-
     }
 
 
@@ -64,6 +60,7 @@ Window {
                 anchors.centerIn: parent
             }
             Button{
+
                 id: b_accept
                 width: 70
                 height: 70
@@ -71,6 +68,7 @@ Window {
                 anchors.top:parent.top
                 anchors.leftMargin: 70
                 anchors.topMargin: 150
+
                 background: Rectangle{
                     radius: 100
                     color: "lightgreen"
@@ -209,6 +207,7 @@ Window {
         function onDeclineCall()
         {
             console.log("Call declined")
+            call_init.close()
         }
         function onCallingOk()
         {
@@ -222,6 +221,7 @@ Window {
         function onDeclineInCall()
         {
             console.log("Ligação encerrada")
+            call_init.close()
 
         }
 

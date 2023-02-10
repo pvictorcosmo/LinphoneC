@@ -1,5 +1,4 @@
 #include "Linphone.h"
-
 #include <QDebug>
 #include <QThread>
 #include <iostream>
@@ -10,6 +9,7 @@
 #include <QCameraInfo>
 #include <QDebug>
 #include <QQuickView>
+#include <linphone/player.h>
 
 LinphoneCore *lc;
 LinphoneCall *call = NULL;
@@ -82,6 +82,7 @@ void LinphoneController::CreateAccount(){
     linphone_proxy_config_edit(proxy_cfg); /*start editing proxy configuration*/
     linphone_proxy_config_enable_register(proxy_cfg,FALSE); /*de-activate registration for this proxy config*/
     linphone_proxy_config_done(proxy_cfg); /*initiate REGISTER with expire = 0*/
+
     while(linphone_proxy_config_get_state(proxy_cfg) !=  LinphoneRegistrationCleared){
             linphone_core_iterate(lc); /*to make sure we receive call backs before shutting down*/
             ms_usleep(50000);
@@ -93,10 +94,12 @@ int LinphoneController::linphoneCalling() {
 
 //    LinphoneController v;
 //    v.CreateAccount();
-
+    LinphoneFriend *my_friend=NULL;
     const char *dest = NULL;
     /* take the destination sip uri from the command line arguments */
-    dest = "sip:paulodiego@192.168.200.34";
+    dest = "sip:dac2@192.168.200.34";
+    my_friend = linphone_core_create_friend_with_address(lc, dest); /*creates friend object from dest*/
+    linphone_core_add_friend(lc,my_friend); /* add my friend to the buddy list, initiate SUBSCRIBE message*/
     if (dest) {
         /*
      Place an outgoing call
@@ -171,15 +174,18 @@ LinphoneController::~LinphoneController()
 
 void LinphoneController::onCallReceived(const bool result)
 {
-  if (result)
-    emit openCall();
+    LinphoneConference *conf;
+    if (result){
+        emit openCall();
+//        linphone_username
+    }
+
 }
 
 void LinphoneController::accept()
 {
-
-  linphone_core_accept_call(lc, call);
-  emit acceptCall();
+    linphone_core_accept_call(lc, call);
+    emit acceptCall();
 }
 
 void LinphoneController::decline()
@@ -192,20 +198,17 @@ void LinphoneController::decline()
 
 void LinphoneController::decline_call()
 {
-    LinphoneReason R;
-    linphone_call_decline(call,R);
-    linphone_core_terminate_call(lc, call);
-    linphone_core_destroy(lc);
-    linphone_call_unref(call);
+    linphone_core_terminate_all_calls 	(lc);
     emit declineInCall();
 }
 
 void LinphoneController::mute_call()
 {
-    LinphoneConference *conf;
+
     //linphone_conference_mute_microphone(conf);
     qDebug() << "Mic mutado";
 
     emit muteCall();
 
 }
+
