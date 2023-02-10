@@ -43,8 +43,50 @@ static void call_state_changed(LinphoneCore *lc, LinphoneCall *call,
     printf("Unhandled notification %i\n", cstate);
   }
 }
-void LinphoneController::CreateAccount(){
 
+void LinphoneWorker::listening() {
+  LinphoneCoreVTable vtable = {0};
+
+  signal(SIGINT, stop);
+  vtable.call_state_changed = call_state_changed;
+
+  lc = linphone_core_new(&vtable, NULL, NULL, NULL);
+  while (true) {
+    // qDebug() << "Thread linphone:" << QThread::currentThreadId();
+    linphone_core_iterate(lc);
+    ms_usleep(50000);
+    if (linphone_core_is_incoming_invite_pending (lc)) {
+      // qDebug() << "Entrou
+      emit callReceived(true);
+    } else
+      emit callReceived(false);
+  }
+  emit callReceived(false);
+}
+
+void LinphoneWorker::inCall() {
+    //    LinphoneController v;
+    //    v.CreateAccount();
+        const char *dest = NULL;
+        /* take the destination sip uri from the command line arguments */
+        dest = "sip:pvictorcbbbb@sip.linphone.org";
+        call = linphone_core_invite(lc, dest);
+        linphone_call_ref(call);
+        while (running) {
+            linphone_core_iterate(lc);
+            ms_usleep(50000);
+        }
+        emit doCalling(true);
+    //    if (call && linphone_call_get_state(call) != LinphoneCallEnd) {
+    //        /* terminate the call */
+    //        printf("Terminating the call...\n");
+    //        linphone_core_terminate_call(lc, call);
+    //        /*at this stage we don't need the call object */
+    //        linphone_call_unref(call);
+    //    }
+}
+
+void LinphoneWorker::createAccount() {
     LinphoneCoreVTable vtable={0};
     LinphoneProxyConfig* proxy_cfg;
     LinphoneAddress *from;
@@ -87,128 +129,68 @@ void LinphoneController::CreateAccount(){
             linphone_core_iterate(lc); /*to make sure we receive call backs before shutting down*/
             ms_usleep(50000);
     }
-
 }
 
-int LinphoneController::linphoneCalling() {
-
-//    LinphoneController v;
-//    v.CreateAccount();
-    LinphoneFriend *my_friend=NULL;
-    const char *dest = NULL;
-    /* take the destination sip uri from the command line arguments */
-    dest = "sip:dac2@192.168.200.34";
-    my_friend = linphone_core_create_friend_with_address(lc, dest); /*creates friend object from dest*/
-    linphone_core_add_friend(lc,my_friend); /* add my friend to the buddy list, initiate SUBSCRIBE message*/
-    if (dest) {
-        /*
-     Place an outgoing call
-    */
-
-        linphone_core_enable_video(lc, TRUE, TRUE);
-        linphone_core_enable_self_view(lc, FALSE);
-        call = linphone_core_invite(lc, dest);
-
-        if (call == NULL) {
-            printf("Could not place call to %s\n", dest);
-
-        } else
-            printf("Call to %s is in progress...", dest);
-        linphone_call_ref(call);
-    }
-    /* main loop for receiving notifications and doing background linphonecore
-   * work: */
-    while (running) {
-        linphone_core_iterate(lc);
-        ms_usleep(50000);
-    }
-    if (call && linphone_call_get_state(call) != LinphoneCallEnd) {
-        /* terminate the call */
-        printf("Terminating the call...\n");
-        linphone_core_terminate_call(lc, call);
-        /*at this stage we don't need the call object */
-        linphone_call_unref(call);
-    }
-
-    emit callingOk();
-    return 0;
-}
-
-void LinphoneWorker::doWork() {
-  LinphoneCoreVTable vtable = {0};
-
-  signal(SIGINT, stop);
-  vtable.call_state_changed = call_state_changed;
-
-  lc = linphone_core_new(&vtable, NULL, NULL, NULL);
-  while (true) {
-    // qDebug() << "Thread linphone:" << QThread::currentThreadId();
-    linphone_core_iterate(lc);
-    ms_usleep(50000);
-    if (linphone_core_in_call(lc)) {
-      // qDebug() << "Entrou
-      emit callReceived(true);
-      //                linphone_core_accept_call(lc,call);
-    } else
-      emit callReceived(false);
-  }
-  emit callReceived(false);
-}
 
 LinphoneController::LinphoneController() {
+  LinphoneWorker *listening = new LinphoneWorker;
+  listening->moveToThread(&workerListening);
+  connect(&workerListening, &QThread::finished, listening, &QObject::deleteLater);
+  connect(this, &LinphoneController::operate, listening, &LinphoneWorker::listening);
+  connect(listening, &LinphoneWorker::callReceived, this,&LinphoneController::onCallReceived);
+  workerListening.start();
 
-  LinphoneWorker *worker = new LinphoneWorker;
-  worker->moveToThread(&workerThread);
-  connect(&workerThread, &QThread::finished, worker, &QObject::deleteLater);
-  connect(this, &LinphoneController::operate, worker, &LinphoneWorker::doWork);
-  connect(worker, &LinphoneWorker::callReceived, this,
-          &LinphoneController::onCallReceived);
-  workerThread.start();
+  LinphoneWorker *calling = new LinphoneWorker;
+  calling->moveToThread(&workerCalling);
+  connect(&workerCalling, &QThread::finished, calling, &QObject::deleteLater);
+  connect(this, &LinphoneController::calling, calling, &LinphoneWorker::inCall);
+  connect(calling, &LinphoneWorker::doCalling, this ,&LinphoneController::onCallOutgoing);
+  workerCalling.start();
 }
 
-LinphoneController::~LinphoneController()
-{
-  workerThread.quit();
-  workerThread.wait();
+LinphoneController::~LinphoneController() {
+  workerListening.quit();
+  workerListening.wait();
+
+  workerCalling.quit();
+  workerCalling.wait();
 }
 
-void LinphoneController::onCallReceived(const bool result)
-{
-    LinphoneConference *conf;
-    if (result){
-        emit openCall();
-        //        linphone_username
-    }
-
-}
-
-void LinphoneController::accept()
-{
+void LinphoneController::accept() {
     linphone_core_accept_call(lc, call);
     emit acceptCall();
 }
 
-void LinphoneController::decline()
-{
+void LinphoneController::decline() {
     linphone_core_terminate_call(lc, call);
     linphone_core_destroy(lc);
     linphone_call_unref(call);
     emit declineCall();
 }
 
-void LinphoneController::decline_call()
-{
+void LinphoneController::decline_call() {
     linphone_core_terminate_all_calls(lc);
     emit declineInCall();
 }
 
-void LinphoneController::mute_call()
-{
-
+void LinphoneController::video_on() {
+    linphone_core_enable_video(lc, TRUE, TRUE);
+    linphone_core_enable_self_view(lc, FALSE);
     //linphone_conference_mute_microphone(conf);
-    qDebug() << "Mic mutado";
+    qDebug() << "Video ligado";
 
-    emit muteCall();
+    emit videoOn();
 
 }
 
+void LinphoneController::onCallReceived(const bool result) {
+
+    if (result){
+        emit openCall();
+        //        linphone_username
+    }
+}
+
+void LinphoneController::onCallOutgoing(const bool result) {
+
+}

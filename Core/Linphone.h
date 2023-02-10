@@ -8,14 +8,19 @@
 class LinphoneWorker : public QObject {
   Q_OBJECT
 public slots:
-  void doWork();
+  void listening();
+  void inCall();
 signals:
+  void doCalling(const bool result);
   void callReceived(const bool result);
+private:
+  void createAccount();
 };
 
 class LinphoneController : public QObject {
   Q_OBJECT
-  QThread workerThread;
+  QThread workerListening;
+  QThread workerCalling;
 
 public:
   static LinphoneController &getInstance() {
@@ -30,17 +35,23 @@ public:
     return &LinphoneController::getInstance();
   }
 
-  Q_INVOKABLE void initThread() { emit operate(); }
+  Q_INVOKABLE void initThread() {
+      emit operate();
+  }
+  Q_INVOKABLE void callInitialization() {
+      emit callInit();
+  }
+  Q_INVOKABLE int linphoneCalling() {
+      emit calling();
+  }
   Q_INVOKABLE void accept();
   Q_INVOKABLE void decline();
   Q_INVOKABLE void decline_call();
-  Q_INVOKABLE int linphoneCalling();
-  Q_INVOKABLE void callInitialization() { emit callInit(); }
-  Q_INVOKABLE void mute_call();
-  void CreateAccount();
+  Q_INVOKABLE void video_on();
 
 public slots:
   void onCallReceived(const bool result);
+  void onCallOutgoing(const bool result);
 
 private:
   LinphoneController();
@@ -49,15 +60,17 @@ private:
   LinphoneController &operator=(const LinphoneController &) = delete;
   LinphoneController(const LinphoneController &&) = delete;
   LinphoneController &operator=(const LinphoneController &&) = delete;
+
 signals:
   void operate();
+  void calling();
   void openCall();
   void acceptCall();
   void declineCall();
   void declineInCall();
   void callingOk();
   void callInit();
-  void muteCall();
+  void videoOn();
 };
 
 #endif // LINPHONE_H

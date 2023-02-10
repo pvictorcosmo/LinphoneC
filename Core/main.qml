@@ -37,7 +37,7 @@ Window {
                 color: "red"
                 anchors.fill:parent
             }
-            onClicked: LinphoneController.linphoneCalling();
+            onClicked: {LinphoneController.linphoneCalling();LinphoneController.callInitialization();}
 
     }
 
@@ -182,7 +182,7 @@ Window {
                     anchors.fill:parent
                 }
 
-                onClicked: LinphoneController.mute_call()
+                onClicked: LinphoneController.video_on()
             }
         }
     }
@@ -194,6 +194,7 @@ Window {
         {
             call.open()
         }
+
 
         function onOperate()
         {
@@ -208,12 +209,11 @@ Window {
         function onDeclineCall()
         {
             console.log("Call declined")
-            call.closed()
+
         }
         function onCallingOk()
         {
             console.log("Call iniciada")
-            call.close()
 
         }
         function onCallInit()
@@ -224,8 +224,6 @@ Window {
         {
             console.log("Ligação encerrada")
             call_init.close()
-
-
         }
 
     }
