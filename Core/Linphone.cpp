@@ -91,7 +91,7 @@ void LinphoneWorker::createAccount() {
     char* password=NULL;
     const char* server_addr;
 
-    identity="sip:dac1@172.16.2.17";
+    identity="sip:dac1@172.16.4.41";
     password="123";
 
     signal(SIGINT,stop);
