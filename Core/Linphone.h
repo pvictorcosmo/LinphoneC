@@ -8,8 +8,8 @@
 class LinphoneWorker : public QObject {
   Q_OBJECT
 public slots:
-  void listening();
-  void inCall();
+  void received();
+  void makeCall();
 signals:
   void doCalling(const bool result);
   void callReceived(const bool result);
@@ -36,18 +36,22 @@ public:
   }
 
   Q_INVOKABLE void initThread() {
-      emit operate();
+      emit waitingCall();
   }
+
   Q_INVOKABLE void callInitialization() {
       emit callInit();
   }
+
   Q_INVOKABLE int linphoneCalling() {
       emit calling();
   }
+
   Q_INVOKABLE void accept();
   Q_INVOKABLE void decline();
   Q_INVOKABLE void decline_call();
   Q_INVOKABLE void video_on();
+  Q_INVOKABLE void loadingScreen();
 
 public slots:
   void onCallReceived(const bool result);
@@ -62,7 +66,7 @@ private:
   LinphoneController &operator=(const LinphoneController &&) = delete;
 
 signals:
-  void operate();
+  void waitingCall();
   void calling();
   void openCall();
   void acceptCall();
@@ -71,6 +75,7 @@ signals:
   void callingOk();
   void callInit();
   void videoOn();
+  void loading();
 };
 
 #endif // LINPHONE_H

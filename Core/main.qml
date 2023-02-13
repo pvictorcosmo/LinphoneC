@@ -187,6 +187,10 @@ Window {
         }
     }
 
+
+
+}
+
     Connections {
         target: LinphoneController
 
@@ -196,7 +200,7 @@ Window {
         }
 
 
-        function onOperate()
+        function onWaitingCall()
         {
             console.log("Iniciou a Thread")
         }
@@ -226,6 +230,8 @@ Window {
             call_init.close()
         }
 
+
+
     }
 }
-}
+
