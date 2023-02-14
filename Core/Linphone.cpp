@@ -55,7 +55,7 @@ void LinphoneWorker::received() {
     // qDebug() << "Thread linphone:" << QThread::currentThreadId();
     linphone_core_iterate(lc);
     ms_usleep(50000);
-    if (linphone_core_is_incoming_invite_pending (lc) && LinphoneCallStateConnected ) {
+    if (linphone_core_is_incoming_invite_pending (lc)) {
 
       emit callReceived(true);
     } else
@@ -69,13 +69,22 @@ void LinphoneWorker::makeCall() {
         v.createAccount();
         const char *dest = NULL;
         /* take the destination sip uri from the command line arguments */
-        dest = "sip:pvictorcbbbb@sip.linphone.org";
+        dest = "sip:pvictorcbbbb@sip.linphone.org"; //dac2@172.16.4.28 //sip:pvictorcbbbb@sip.linphone.org
         call = linphone_core_invite(lc, dest);
         linphone_call_ref(call);
+
         while (linphone_core_in_call(lc)) {
             linphone_core_iterate(lc);
             ms_usleep(50000);
-            qDebug() << ("anselmo");
+            qDebug() << ("Ligação em andamento!");
+            qDebug() << "valor:" << linphone_call_get_state(call);
+            if(linphone_call_get_state(call) == 7){
+                qDebug() << "anselmo";
+
+                emit LinphoneController::getInstance().callAccepted();
+
+            }
+
         }
         emit doCalling(true);
 
@@ -101,8 +110,8 @@ void LinphoneWorker::createAccount() {
     proxy_cfg = linphone_core_create_proxy_config(lc);
 
     from = linphone_address_new(identity);
-    linphone_core_set_ring(lc, "/home/paulovictor/Downloads/yt5s.io - Hino do Flamengo (Letra) - Himno de Flamengo (Letra) (128 kbps).mp3");
-    linphone_core_set_ringback(lc, "/home/allan/Downloads/yt5s.io - Hino do Flamengo (Letra) - Himno de Flamengo (Letra) (128 kbps).mp3");
+    linphone_core_set_ring(lc, "/home/paulovictor/Downloads/fla.wav");
+    linphone_core_set_ringback(lc, "/home/paulovictor/Downloads/fla.wav");
 
 //    if (password!=NULL){
 //            info=linphone_auth_info_new(linphone_address_get_username(from),NULL,password,NULL,NULL,NULL); /*create authentication structure from identity*/
@@ -141,6 +150,7 @@ LinphoneController::LinphoneController() {
   makeCall->moveToThread(&workerCalling);
   connect(&workerCalling, &QThread::finished, makeCall, &QObject::deleteLater);
   connect(this, &LinphoneController::calling, makeCall, &LinphoneWorker::makeCall);
+  connect(this, &LinphoneController::callAccepted, makeCall, &LinphoneWorker::makeCall);
   connect(makeCall, &LinphoneWorker::doCalling, this ,&LinphoneController::onCallOutgoing);
   workerCalling.start();
 }
@@ -151,6 +161,9 @@ LinphoneController::~LinphoneController() {
 
   workerCalling.quit();
   workerCalling.wait();
+}
+void LinphoneController::callInitialization() {
+    emit callInit();
 }
 
 void LinphoneController::accept() {
@@ -182,20 +195,16 @@ void LinphoneController::video_on() {
 
 }
 
-void LinphoneController::loadingScreen() {
-    while(linphone_core_is_incoming_invite_pending (lc)){
-        emit loading();
-    }
-}
+
 
 void LinphoneController::onCallReceived(const bool result) {
 
     if (result){
         emit openCall();
-        //        linphone_username
     }
 }
 
 void LinphoneController::onCallOutgoing(const bool result) {
+
 
 }

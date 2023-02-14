@@ -30,14 +30,14 @@ Window {
         width: 200
         height: 70
         text: "Clique para ligar"
-        anchors.centerIn:parent
+        anchors.centerIn: parent
             background: Rectangle
             {
                 radius: 100
                 color: "red"
                 anchors.fill:parent
             }
-            onClicked: {LinphoneController.linphoneCalling();LinphoneController.callInitialization();}
+            onClicked: { LinphoneController.linphoneCalling(); LinphoneController.callInitialization(); }
 
     }
 
@@ -60,7 +60,6 @@ Window {
                 anchors.centerIn: parent
             }
             Button{
-
                 id: b_accept
                 width: 70
                 height: 70
@@ -75,6 +74,7 @@ Window {
                     anchors.fill:parent
 
                 }
+
                 onClicked:
                 {
                     LinphoneController.accept();
@@ -103,38 +103,6 @@ Window {
         id: call_init
         width: 640
         height: 480
-
-//        Item {
-//            width: 640
-//            height: 360
-
-//            Camera {
-//                id: camera
-
-//                imageCapture {
-//                    onImageCaptured: {
-//                        // Show the preview in an Image
-//                        photoPreview.source = preview
-//                    }
-//                }
-//            }
-
-//            VideoOutput {
-//                source: camera
-//                focus : visible // to receive focus and capture key events when visible
-//                anchors.fill: parent
-
-//                MouseArea {
-//                    anchors.fill: parent;
-//                    onClicked: camera.imageCapture.capture();
-//                }
-//            }
-
-//            Image {
-//                id: photoPreview
-//            }
-//        }
-
 
         contentItem: Rectangle {
             color: "lightskyblue"
@@ -187,9 +155,28 @@ Window {
         }
     }
 
+    Dialog {
+
+        id: loading
+        width: 640
+        height: 480
 
 
-}
+        contentItem: Rectangle {
+            color: "lightskyblue"
+            anchors.fill: parent
+
+            Text {
+                anchors.centerIn: parent
+                text: "Carregando"
+                color: "navy"
+
+            }
+        }
+    }
+ }
+
+
 
     Connections {
         target: LinphoneController
@@ -198,8 +185,6 @@ Window {
         {
             call.open()
         }
-
-
         function onWaitingCall()
         {
             console.log("Iniciou a Thread")
@@ -222,6 +207,11 @@ Window {
         }
         function onCallInit()
         {
+            loading.open()
+        }
+        function onCallAccepted(){
+
+            loading.close()
             call_init.open()
         }
         function onDeclineInCall()
@@ -234,4 +224,5 @@ Window {
 
     }
 }
+
 

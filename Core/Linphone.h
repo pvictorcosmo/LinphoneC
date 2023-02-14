@@ -13,6 +13,8 @@ public slots:
 signals:
   void doCalling(const bool result);
   void callReceived(const bool result);
+
+
 private:
   void createAccount();
 };
@@ -39,9 +41,7 @@ public:
       emit waitingCall();
   }
 
-  Q_INVOKABLE void callInitialization() {
-      emit callInit();
-  }
+  Q_INVOKABLE void callInitialization();
 
   Q_INVOKABLE int linphoneCalling() {
       emit calling();
@@ -51,7 +51,6 @@ public:
   Q_INVOKABLE void decline();
   Q_INVOKABLE void decline_call();
   Q_INVOKABLE void video_on();
-  Q_INVOKABLE void loadingScreen();
 
 public slots:
   void onCallReceived(const bool result);
@@ -65,17 +64,19 @@ private:
   LinphoneController(const LinphoneController &&) = delete;
   LinphoneController &operator=(const LinphoneController &&) = delete;
 
-signals:
+ signals:
   void waitingCall();
   void calling();
   void openCall();
   void acceptCall();
+  void callAccepted();
   void declineCall();
   void declineInCall();
   void callingOk();
   void callInit();
   void videoOn();
   void loading();
+
 };
 
 #endif // LINPHONE_H
