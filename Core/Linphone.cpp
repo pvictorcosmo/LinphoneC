@@ -82,10 +82,11 @@ void LinphoneWorker::makeCall() {
                 qDebug() << "anselmo";
 
                 emit LinphoneController::getInstance().callAccepted();
-
             }
 
+
         }
+
         emit doCalling(true);
 
 }
@@ -107,9 +108,9 @@ void LinphoneWorker::createAccount() {
 
     lc=linphone_core_new(&vtable,NULL,NULL,NULL);
 
-    proxy_cfg = linphone_core_create_proxy_config(lc);
+    //proxy_cfg = linphone_core_create_proxy_config(lc);
 
-    from = linphone_address_new(identity);
+    //from = linphone_address_new(identity);
     linphone_core_set_ring(lc, "/home/paulovictor/Downloads/fla.wav");
     linphone_core_set_ringback(lc, "/home/paulovictor/Downloads/fla.wav");
 
@@ -162,9 +163,6 @@ LinphoneController::~LinphoneController() {
   workerCalling.quit();
   workerCalling.wait();
 }
-void LinphoneController::callInitialization() {
-    emit callInit();
-}
 
 void LinphoneController::accept() {
     linphone_core_accept_call(lc, call);
@@ -180,14 +178,13 @@ void LinphoneController::decline() {
 
 void LinphoneController::decline_call() {
     linphone_core_terminate_all_calls(lc);
-//    linphone_core_destroy(lc);
-//    linphone_call_unref(call);
     emit declineInCall();
 }
 
 void LinphoneController::video_on() {
     linphone_core_enable_video(lc, TRUE, TRUE);
     linphone_core_enable_self_view(lc, FALSE);
+
     //linphone_conference_mute_microphone(conf);
     qDebug() << "Video ligado";
 

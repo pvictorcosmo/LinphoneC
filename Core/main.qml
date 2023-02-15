@@ -23,7 +23,7 @@ Window {
             anchors.fill:parent
 
         }
-        onClicked:LinphoneController.initThread();
+        onClicked: LinphoneController.initThread();
 
     Button {
         id: b_call
@@ -37,7 +37,7 @@ Window {
                 color: "red"
                 anchors.fill:parent
             }
-            onClicked: { LinphoneController.linphoneCalling(); LinphoneController.callInitialization(); }
+            onClicked: { LinphoneController.linphoneCalling(); LinphoneController.screenLoadingWindow(); }
 
     }
 
@@ -157,7 +157,7 @@ Window {
 
     Dialog {
 
-        id: loading
+        id: loading_call
         width: 640
         height: 480
 
@@ -205,13 +205,18 @@ Window {
             console.log("Call iniciada")
 
         }
-        function onCallInit()
+        function onWaitingActionInCall()
         {
-            loading.open()
+            loading_call.open()
+        }
+
+        function onCallInProgress()
+        {
+            call_init.open()
         }
         function onCallAccepted(){
 
-            loading.close()
+            loading_call.close()
             call_init.open()
         }
         function onDeclineInCall()

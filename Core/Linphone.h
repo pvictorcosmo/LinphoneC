@@ -41,7 +41,13 @@ public:
       emit waitingCall();
   }
 
-  Q_INVOKABLE void callInitialization();
+  Q_INVOKABLE void screenLoadingWindow() {
+      emit waitingActionInCall();
+  }
+
+  Q_INVOKABLE void screenCallWindow() {
+      emit callInProgress();
+  }
 
   Q_INVOKABLE int linphoneCalling() {
       emit calling();
@@ -73,10 +79,9 @@ private:
   void declineCall();
   void declineInCall();
   void callingOk();
-  void callInit();
+  void waitingActionInCall();
+  void callInProgress();
   void videoOn();
-  void loading();
-
 };
 
 #endif // LINPHONE_H
