@@ -18,7 +18,7 @@
 
 ## ✔️ Técnicas e tecnologias utilizadas
 
-- ``C``
+- ``Linphone SDK`` ``C++`` ``QML``
 
 # Autor
 
