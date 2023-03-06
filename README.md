@@ -6,10 +6,14 @@
 
 ## Descrição do projeto 
 
-- Esse é um projeto feito para uma avaliação da cadeira de introdução a programação, esse projeto utiliza conceitos de manipulação de arquivos e encapsulamento de dados
+- Esse projeto é um exemplo de como usar as ferramentas da Lib Linphone para utilizar o protocolo SIP de VoIP.
 
-- Esse trabalho é um sistema de cadastro de pessoas e pets, com funções como inserir,alterar,deletar etc.. com um menu utilizando switchs.
+- Este projeto integra esse protocolo utilizando C/C++ para um software desktop
 
+- Back-end do projeto foi todo escrito em C++, enquanto o Front-End foi feito em QML
+
+- A Aplicação tem funções como ligar, desligar, atender e recusar chamadas, também tendo funcões de alterar o SIP tanto do destinatário quanto do emissor da ligação modificando seu usuario e seu proxy, a mesma consegue se comunicar com o servidor SIP utilizado pela empresa Linphone (FlexiSIP) 
+- 
 ----
 
 ## ✔️ Técnicas e tecnologias utilizadas
