@@ -20,8 +20,4 @@
 
 - ``Linphone SDK`` ``C++`` ``QML``
 
-# Autor
-
-| [<img src="https://avatars.githubusercontent.com/u/114295733?v=4" width=115><br><sub>Paulo Victor Cosmo</sub>]
-| :---: |
 
